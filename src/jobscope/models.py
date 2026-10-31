@@ -15,6 +15,9 @@ class Job(BaseModel):
     job_type: str = ""
     location: str = ""
     salary_text: str = ""
+    salary_min: float | None = None
+    salary_max: float | None = None
+    salary_currency: str = ""
     tags: list[str] = Field(default_factory=list)
     description: str = ""
     posted_at: datetime | None = None
