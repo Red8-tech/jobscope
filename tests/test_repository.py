@@ -1,0 +1,115 @@
+from collections.abc import Iterator
+from datetime import datetime
+
+import pytest
+
+from jobscope.db.repository import (
+    CompanyCount,
+    JobRepository,
+    SkillCount,
+)
+from jobscope.models import Job
+
+
+def make_job(
+    source_id: str,
+    company: str = "Acme",
+    tags: tuple[str, ...] = ("python",),
+    posted: datetime | None = datetime(2026, 10, 28),
+    salary: tuple[float, float, str] | None = None,
+) -> Job:
+    low, high, currency = salary if salary else (None, None, "")
+    return Job(
+        source="test",
+        source_id=source_id,
+        title="Python Developer",
+        company=company,
+        url=f"https://example.com/{source_id}",
+        tags=list(tags),
+        posted_at=posted,
+        salary_min=low,
+        salary_max=high,
+        salary_currency=currency,
+    )
+
+
+@pytest.fixture
+def repo() -> Iterator[JobRepository]:
+    repository = JobRepository()
+    yield repository
+    repository.close()
+
+
+def test_add_jobs_is_idempotent(repo: JobRepository) -> None:
+    jobs = [make_job("1"), make_job("2")]
+    assert repo.add_jobs(jobs) == 2
+    assert repo.add_jobs(jobs) == 0
+    assert repo.count_jobs() == 2
+
+
+def test_round_trip_preserves_tags_and_dates(repo: JobRepository) -> None:
+    repo.add_jobs([make_job("1", tags=("python", "sql"))])
+    [job] = repo.list_jobs()
+    assert job.id is not None
+    assert set(job.tags) == {"python", "sql"}
+    assert job.posted_at == datetime(2026, 10, 28)
+
+
+def test_top_skills_counts_jobs_per_skill(repo: JobRepository) -> None:
+    repo.add_jobs(
+        [
+            make_job("1", tags=("python", "sql")),
+            make_job("2", tags=("python",)),
+            make_job("3", tags=("sql", "docker")),
+            make_job("4", tags=("python",)),
+        ]
+    )
+    assert repo.top_skills() == [
+        SkillCount("python", 3),
+        SkillCount("sql", 2),
+        SkillCount("docker", 1),
+    ]
+
+
+def test_top_companies_gives_ties_the_same_rank(repo: JobRepository) -> None:
+    repo.add_jobs(
+        [
+            make_job("1", company="Acme"),
+            make_job("2", company="Acme"),
+            make_job("3", company="Globex"),
+            make_job("4", company="Initech"),
+        ]
+    )
+    assert repo.top_companies() == [
+        CompanyCount("Acme", 2, 1),
+        CompanyCount("Globex", 1, 2),
+        CompanyCount("Initech", 1, 2),
+    ]
+
+
+def test_jobs_per_week_groups_by_week(repo: JobRepository) -> None:
+    repo.add_jobs(
+        [
+            make_job("1", posted=datetime(2026, 10, 26)),
+            make_job("2", posted=datetime(2026, 10, 28)),
+            make_job("3", posted=datetime(2026, 11, 4)),
+            make_job("4", posted=None),
+        ]
+    )
+    assert [week.jobs for week in repo.jobs_per_week()] == [2, 1]
+
+
+def test_salary_by_skill_ignores_thin_data_and_non_usd(repo: JobRepository) -> None:
+    repo.add_jobs(
+        [
+            make_job("1", tags=("python",), salary=(100000, 120000, "USD")),
+            make_job("2", tags=("python",), salary=(80000, 100000, "USD")),
+            make_job("3", tags=("sql",), salary=(90000, 95000, "USD")),
+            make_job("4", tags=("python",), salary=(70000, 80000, "EUR")),
+        ]
+    )
+    [result] = repo.salary_by_skill(min_jobs=2)
+    assert result.skill == "python"
+    assert result.jobs == 2
+    assert result.avg_min == 90000
+    assert result.avg_max == 110000

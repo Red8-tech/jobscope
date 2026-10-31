@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 class Job(BaseModel):
     """A single job listing in our normalized, source-independent form."""
 
+    id: int | None = None
     source: str
     source_id: str
     title: str
