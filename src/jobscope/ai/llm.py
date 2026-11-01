@@ -5,7 +5,7 @@ from typing import Any, Protocol
 import httpx
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-DEFAULT_MODEL = "llama-3.3-70b-versatile"
+DEFAULT_MODEL = "openai/gpt-oss-120b"
 
 
 class LLMError(Exception):
@@ -60,7 +60,9 @@ class GroqClient:
                 last_error = exc
                 time.sleep(self._backoff * 2**attempt)
             except httpx.HTTPStatusError as exc:
-                raise LLMError(f"request rejected with status {exc.response.status_code}") from exc
+                status = exc.response.status_code
+                detail = exc.response.text[:200]
+                raise LLMError(f"request rejected with status {status}: {detail}") from exc
             except (KeyError, IndexError, ValueError) as exc:
                 raise LLMError("unexpected response shape from model API") from exc
         raise LLMError(f"failed after {self._retries} attempts") from last_error
