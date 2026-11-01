@@ -1,6 +1,6 @@
 import sqlite3
 from collections.abc import Iterable
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import NamedTuple
 
@@ -21,15 +21,14 @@ INSERT OR IGNORE INTO jobs (
 )
 """
 
-_SELECT_JOBS = """
+_JOBS_BASE = """
 SELECT j.*, GROUP_CONCAT(s.name, char(31)) AS tags
 FROM jobs j
 LEFT JOIN job_skills js ON js.job_id = j.id
 LEFT JOIN skills s ON s.id = js.skill_id
-GROUP BY j.id
-ORDER BY j.posted_at DESC, j.id
-LIMIT ? OFFSET ?
 """
+_SELECT_JOBS = _JOBS_BASE + " GROUP BY j.id ORDER BY j.posted_at DESC, j.id LIMIT ? OFFSET ?"
+_SELECT_JOB = _JOBS_BASE + " WHERE j.id = ? GROUP BY j.id"
 
 
 
@@ -60,7 +59,9 @@ class JobRepository:
     """All database access lives here; the rest of the app never writes SQL."""
 
     def __init__(self, path: str | Path = ":memory:") -> None:
-        self._conn = sqlite3.connect(str(path))
+        # Each request opens its own connection and uses it sequentially, so
+        # sharing it across FastAPI's worker threads is safe.
+        self._conn = sqlite3.connect(str(path), check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         self._conn.execute("PRAGMA foreign_keys = ON")
         self._conn.executescript(SCHEMA)
@@ -95,6 +96,23 @@ class JobRepository:
     def list_jobs(self, limit: int = 50, offset: int = 0) -> list[Job]:
         rows = self._conn.execute(_SELECT_JOBS, (limit, offset)).fetchall()
         return [self._row_to_job(row) for row in rows]
+
+    def get_job(self, job_id: int) -> Job | None:
+        row = self._conn.execute(_SELECT_JOB, (job_id,)).fetchone()
+        return self._row_to_job(row) if row else None
+
+    def add_resume(self, text: str) -> int:
+        with self._conn:
+            cursor = self._conn.execute(
+                "INSERT INTO resumes (text, created_at) VALUES (?, ?)",
+                (text, datetime.now(timezone.utc).isoformat()),
+            )
+        assert cursor.lastrowid is not None
+        return cursor.lastrowid
+
+    def resume_exists(self, resume_id: int) -> bool:
+        row = self._conn.execute("SELECT 1 FROM resumes WHERE id = ?", (resume_id,)).fetchone()
+        return row is not None
 
     def top_skills(self, limit: int = 10) -> list[SkillCount]:
         rows = self._conn.execute(

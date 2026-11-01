@@ -113,3 +113,17 @@ def test_salary_by_skill_ignores_thin_data_and_non_usd(repo: JobRepository) -> N
     assert result.jobs == 2
     assert result.avg_min == 90000
     assert result.avg_max == 110000
+
+
+def test_get_job_returns_none_when_missing(repo: JobRepository) -> None:
+    repo.add_jobs([make_job("1")])
+    [stored] = repo.list_jobs()
+    assert stored.id is not None
+    assert repo.get_job(stored.id) == stored
+    assert repo.get_job(9999) is None
+
+
+def test_resumes_can_be_stored_and_found(repo: JobRepository) -> None:
+    resume_id = repo.add_resume("Python developer, 3 projects")
+    assert repo.resume_exists(resume_id)
+    assert not repo.resume_exists(resume_id + 1)
