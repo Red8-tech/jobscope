@@ -22,3 +22,12 @@ class Job(BaseModel):
     tags: list[str] = Field(default_factory=list)
     description: str = ""
     posted_at: datetime | None = None
+
+
+class MatchResult(BaseModel):
+    """How well one job fits a resume."""
+
+    job_id: int
+    score: float
+    matched: list[str] = Field(default_factory=list)
+    gaps: list[str] = Field(default_factory=list)

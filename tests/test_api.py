@@ -5,9 +5,13 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
+from jobscope.ai.extractor import SkillExtractor
+from jobscope.ai.llm import LLMError
+from jobscope.ai.matching import ResumeMatcher
 from jobscope.api.app import create_app
 from jobscope.ingestion.remotive import IngestionError
 from jobscope.models import Job
+from tests.fakes import ScriptedClient
 
 
 class FakeSource:
@@ -105,3 +109,45 @@ def test_resume_flow(client: TestClient) -> None:
     }
     assert client.get("/resumes/9999/matches").status_code == 404
     assert client.post("/resumes", json={"text": ""}).status_code == 422
+
+
+
+@pytest.fixture
+def match_client(tmp_path: Path) -> Iterator[TestClient]:
+    llm = ScriptedClient(['{"skills": ["python", "sql"], "seniority": "mid"}'])
+    app = create_app(
+        db_path=tmp_path / "match.db",
+        sources={"fake": FakeSource},
+        matcher_factory=lambda: ResumeMatcher(SkillExtractor(llm)),
+    )
+    with TestClient(app) as test_client:
+        yield test_client
+
+
+def test_match_flow_scores_stores_and_returns_matches(match_client: TestClient) -> None:
+    ingest_fake(match_client)
+    resume_id = match_client.post("/resumes", json={"text": "Python developer, SQL"}).json()["id"]
+
+    matched = match_client.post(f"/resumes/{resume_id}/match").json()
+    assert matched["matches"][0]["job_id"] == 1
+    assert matched["matches"][0]["gaps"] == []
+
+    stored = match_client.get(f"/resumes/{resume_id}/matches").json()
+    assert stored == matched
+
+
+def test_match_unknown_resume_is_404(match_client: TestClient) -> None:
+    assert match_client.post("/resumes/9999/match").status_code == 404
+
+
+def raise_llm_error() -> ResumeMatcher:
+    raise LLMError("GROQ_API_KEY is not set")
+
+
+def test_match_returns_503_when_ai_is_unavailable(tmp_path: Path) -> None:
+    app = create_app(db_path=tmp_path / "x.db", matcher_factory=raise_llm_error)
+    with TestClient(app) as test_client:
+        resume_id = test_client.post("/resumes", json={"text": "Python"}).json()["id"]
+        response = test_client.post(f"/resumes/{resume_id}/match")
+    assert response.status_code == 503
+    assert "GROQ_API_KEY" in response.json()["detail"]

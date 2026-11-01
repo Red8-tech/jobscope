@@ -3,6 +3,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 
+from jobscope.ai.llm import LLMError
 from jobscope.api.schemas import (
     IngestResult,
     JobPage,
@@ -83,9 +84,27 @@ def create_resume(payload: ResumeCreate, repo: Repo) -> ResumeCreated:
     return ResumeCreated(id=repo.add_resume(payload.text))
 
 
+@router.post("/resumes/{resume_id}/match")
+def match_resume(
+    resume_id: int,
+    request: Request,
+    repo: Repo,
+    limit: Annotated[int, Query(ge=1, le=50)] = 10,
+) -> MatchList:
+    text = repo.get_resume_text(resume_id)
+    if text is None:
+        raise HTTPException(status_code=404, detail="resume not found")
+    try:
+        matcher = request.app.state.matcher_factory()
+        results = matcher.match(text, repo.all_jobs(), limit=limit)
+    except LLMError as exc:
+        raise HTTPException(status_code=503, detail=f"AI service unavailable: {exc}") from exc
+    repo.save_matches(resume_id, results)
+    return MatchList(resume_id=resume_id, matches=results)
+
+
 @router.get("/resumes/{resume_id}/matches")
 def get_matches(resume_id: int, repo: Repo) -> MatchList:
     if not repo.resume_exists(resume_id):
         raise HTTPException(status_code=404, detail="resume not found")
-    # Real matching arrives in Stage 5; the response shape is already final.
-    return MatchList(resume_id=resume_id, matches=[])
+    return MatchList(resume_id=resume_id, matches=repo.get_matches(resume_id))

@@ -8,7 +8,7 @@ from jobscope.db.repository import (
     JobRepository,
     SkillCount,
 )
-from jobscope.models import Job
+from jobscope.models import Job, MatchResult
 
 
 def make_job(
@@ -127,3 +127,30 @@ def test_resumes_can_be_stored_and_found(repo: JobRepository) -> None:
     resume_id = repo.add_resume("Python developer, 3 projects")
     assert repo.resume_exists(resume_id)
     assert not repo.resume_exists(resume_id + 1)
+
+
+def test_matches_are_saved_and_replaced(repo: JobRepository) -> None:
+
+    repo.add_jobs([make_job("1"), make_job("2")])
+    first, second = (job.id for job in repo.list_jobs())
+    assert first is not None and second is not None
+    resume_id = repo.add_resume("Python developer")
+
+    repo.save_matches(
+        resume_id,
+        [MatchResult(job_id=first, score=0.4, matched=["python"], gaps=["sql"])],
+    )
+    repo.save_matches(
+        resume_id,
+        [MatchResult(job_id=second, score=0.9, matched=[], gaps=[])],
+    )
+
+    assert [m.job_id for m in repo.get_matches(resume_id)] == [second]
+
+
+def test_all_jobs_and_resume_text(repo: JobRepository) -> None:
+    repo.add_jobs([make_job(str(i)) for i in range(60)])
+    assert len(repo.all_jobs()) == 60
+    resume_id = repo.add_resume("hello")
+    assert repo.get_resume_text(resume_id) == "hello"
+    assert repo.get_resume_text(9999) is None

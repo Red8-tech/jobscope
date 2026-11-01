@@ -2,6 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from jobscope.models import MatchResult
+
 
 class JobSummary(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -45,12 +47,6 @@ class ResumeCreated(BaseModel):
     id: int
 
 
-class Match(BaseModel):
-    job_id: int
-    score: float
-    gaps: list[str]
-
-
 class MatchList(BaseModel):
     resume_id: int
-    matches: list[Match]
+    matches: list[MatchResult]

@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS matches (
     resume_id INTEGER NOT NULL REFERENCES resumes(id) ON DELETE CASCADE,
     job_id INTEGER NOT NULL REFERENCES jobs(id) ON DELETE CASCADE,
     score REAL NOT NULL,
+    matched TEXT NOT NULL DEFAULT '[]',
     gaps TEXT NOT NULL DEFAULT '[]',
     UNIQUE (resume_id, job_id)
 );

@@ -1,3 +1,4 @@
+import json
 import sqlite3
 from collections.abc import Iterable
 from datetime import datetime, timezone
@@ -5,7 +6,7 @@ from pathlib import Path
 from typing import NamedTuple
 
 from jobscope.db.schema import SCHEMA
-from jobscope.models import Job
+from jobscope.models import Job, MatchResult
 
 # Tags are joined with an ASCII "unit separator" so no real tag can contain it.
 _TAG_SEPARATOR = "\x1f"
@@ -211,3 +212,41 @@ class JobRepository:
             description=row["description"],
             posted_at=datetime.fromisoformat(posted) if posted else None,
         )
+
+
+    def all_jobs(self) -> list[Job]:
+        return self.list_jobs(limit=-1)  # SQLite treats a negative LIMIT as "no limit"
+
+    def get_resume_text(self, resume_id: int) -> str | None:
+        row = self._conn.execute("SELECT text FROM resumes WHERE id = ?", (resume_id,)).fetchone()
+        return str(row["text"]) if row else None
+
+    def save_matches(self, resume_id: int, matches: Iterable[MatchResult]) -> None:
+        """Replace any earlier matches for this resume."""
+        rows = [
+            (resume_id, m.job_id, m.score, json.dumps(m.matched), json.dumps(m.gaps))
+            for m in matches
+        ]
+        with self._conn:
+            self._conn.execute("DELETE FROM matches WHERE resume_id = ?", (resume_id,))
+            self._conn.executemany(
+                "INSERT INTO matches (resume_id, job_id, score, matched, gaps) "
+                "VALUES (?, ?, ?, ?, ?)",
+                rows,
+            )
+
+    def get_matches(self, resume_id: int) -> list[MatchResult]:
+        rows = self._conn.execute(
+            "SELECT job_id, score, matched, gaps FROM matches "
+            "WHERE resume_id = ? ORDER BY score DESC, job_id",
+            (resume_id,),
+        ).fetchall()
+        return [
+            MatchResult(
+                job_id=r["job_id"],
+                score=r["score"],
+                matched=json.loads(r["matched"]),
+                gaps=json.loads(r["gaps"]),
+            )
+            for r in rows
+        ]
