@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request
 
 from jobscope.ai.llm import LLMError
 from jobscope.api.schemas import (
+    BackfillResult,
     IngestResult,
     JobPage,
     JobSummary,
@@ -17,6 +18,7 @@ from jobscope.api.schemas import (
 from jobscope.db.repository import JobRepository
 from jobscope.ingestion.remotive import IngestionError
 from jobscope.models import Job
+from jobscope.services.backfill import backfill_skills
 
 router = APIRouter()
 
@@ -122,3 +124,19 @@ def get_matches(resume_id: int, repo: Repo) -> MatchList:
     if not repo.resume_exists(resume_id):
         raise HTTPException(status_code=404, detail="resume not found")
     return MatchList(resume_id=resume_id, matches=repo.get_matches(resume_id))
+
+
+@router.post("/backfill", dependencies=PROTECTED)
+def backfill(
+    request: Request,
+    repo: Repo,
+    limit: Annotated[int, Query(ge=1, le=100)] = 25,
+) -> BackfillResult:
+    try:
+        extractor = request.app.state.extractor_factory()
+    except LLMError as exc:
+        raise HTTPException(status_code=503, detail=f"AI service unavailable: {exc}") from exc
+    report = backfill_skills(repo, extractor, limit=limit)
+    return BackfillResult(
+        processed=report.processed, updated=report.updated, failed=report.failed
+    )

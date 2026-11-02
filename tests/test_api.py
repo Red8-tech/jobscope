@@ -196,3 +196,43 @@ def test_production_with_api_key_starts(tmp_path: Path) -> None:
         "JOBSCOPE_DB": str(tmp_path / "p.db"),
     }
     assert create_app_from_env(env).state.api_key == "k"
+
+
+class UntaggedSource:
+    name = "untagged"
+
+    def fetch(self) -> list[Job]:
+        return [
+            Job(source="u", source_id="1", title="Dev", company="Acme", url="u",
+                description="needs redis")
+        ]
+
+
+def test_backfill_fills_untagged_jobs(tmp_path: Path) -> None:
+    llm = ScriptedClient(['{"skills": ["redis"]}'])
+    app = create_app(
+        db_path=tmp_path / "b.db",
+        sources={"untagged": UntaggedSource},
+        extractor_factory=lambda: SkillExtractor(llm),
+    )
+    with TestClient(app) as test_client:
+        test_client.post("/ingest", params={"source": "untagged"})
+        result = test_client.post("/backfill").json()
+        job = test_client.get("/jobs/1").json()
+    assert result == {"processed": 1, "updated": 1, "failed": 0}
+    assert job["tags"] == ["redis"]
+
+
+def test_backfill_requires_api_key(tmp_path: Path) -> None:
+    app = create_app(db_path=tmp_path / "b.db", api_key="secret")
+    with TestClient(app) as test_client:
+        assert test_client.post("/backfill").status_code == 401
+
+
+def test_backfill_returns_503_when_ai_is_unavailable(tmp_path: Path) -> None:
+    def broken() -> SkillExtractor:
+        raise LLMError("GROQ_API_KEY is not set")
+
+    app = create_app(db_path=tmp_path / "b.db", extractor_factory=broken)
+    with TestClient(app) as test_client:
+        assert test_client.post("/backfill").status_code == 503

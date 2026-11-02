@@ -50,3 +50,9 @@ class ResumeCreated(BaseModel):
 class MatchList(BaseModel):
     resume_id: int
     matches: list[MatchResult]
+
+
+class BackfillResult(BaseModel):
+    processed: int
+    updated: int
+    failed: int

@@ -27,17 +27,26 @@ def default_matcher() -> ResumeMatcher:
     return ResumeMatcher(SkillExtractor(GroqClient()))
 
 
+ExtractorFactory = Callable[[], SkillExtractor]
+
+
+def default_extractor() -> SkillExtractor:
+    return SkillExtractor(GroqClient())
+
+
 def create_app(
     db_path: str | Path = DEFAULT_DB,
     sources: dict[str, SourceFactory] | None = None,
     matcher_factory: MatcherFactory = default_matcher,
     api_key: str | None = None,
+    extractor_factory: ExtractorFactory = default_extractor,
 ) -> FastAPI:
     app = FastAPI(title="jobscope", version=__version__)
     app.state.db_path = Path(db_path)
     app.state.sources = default_sources() if sources is None else sources
     app.state.matcher_factory = matcher_factory
     app.state.api_key = api_key
+    app.state.extractor_factory = extractor_factory
     app.include_router(router)
     return app
 
