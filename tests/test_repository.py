@@ -154,3 +154,17 @@ def test_all_jobs_and_resume_text(repo: JobRepository) -> None:
     resume_id = repo.add_resume("hello")
     assert repo.get_resume_text(resume_id) == "hello"
     assert repo.get_resume_text(9999) is None
+
+
+def test_untagged_jobs_can_be_given_skills(repo: JobRepository) -> None:
+    repo.add_jobs([make_job("1", tags=("python",)), make_job("2", tags=())])
+    [untagged] = repo.jobs_without_skills()
+    assert untagged.source_id == "2"
+    assert untagged.id is not None
+
+    repo.add_skills(untagged.id, ["redis", "git", "redis"])
+
+    assert repo.jobs_without_skills() == []
+    stored = repo.get_job(untagged.id)
+    assert stored is not None
+    assert set(stored.tags) == {"redis", "git"}

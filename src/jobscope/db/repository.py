@@ -30,6 +30,7 @@ LEFT JOIN skills s ON s.id = js.skill_id
 """
 _SELECT_JOBS = _JOBS_BASE + " GROUP BY j.id ORDER BY j.posted_at DESC, j.id LIMIT ? OFFSET ?"
 _SELECT_JOB = _JOBS_BASE + " WHERE j.id = ? GROUP BY j.id"
+_SELECT_UNTAGGED = _JOBS_BASE + " WHERE js.job_id IS NULL GROUP BY j.id ORDER BY j.id"
 
 
 
@@ -81,13 +82,7 @@ class JobRepository:
                 job_id = cursor.lastrowid
                 assert job_id is not None
                 inserted += 1
-                for tag in job.tags:
-                    self._conn.execute("INSERT OR IGNORE INTO skills (name) VALUES (?)", (tag,))
-                    self._conn.execute(
-                        "INSERT OR IGNORE INTO job_skills (job_id, skill_id) "
-                        "SELECT ?, id FROM skills WHERE name = ?",
-                        (job_id, tag),
-                    )
+                self._link_skills(job_id, job.tags)
         return inserted
 
     def count_jobs(self) -> int:
@@ -250,3 +245,20 @@ class JobRepository:
             )
             for r in rows
         ]
+
+    def _link_skills(self, job_id: int, skills: Iterable[str]) -> None:
+        for skill in skills:
+            self._conn.execute("INSERT OR IGNORE INTO skills (name) VALUES (?)", (skill,))
+            self._conn.execute(
+                "INSERT OR IGNORE INTO job_skills (job_id, skill_id) "
+                "SELECT ?, id FROM skills WHERE name = ?",
+                (job_id, skill),
+            )
+
+    def add_skills(self, job_id: int, skills: Iterable[str]) -> None:
+        with self._conn:
+            self._link_skills(job_id, skills)
+
+    def jobs_without_skills(self) -> list[Job]:
+        rows = self._conn.execute(_SELECT_UNTAGGED).fetchall()
+        return [self._row_to_job(row) for row in rows]
