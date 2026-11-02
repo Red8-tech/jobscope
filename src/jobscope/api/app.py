@@ -1,4 +1,4 @@
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -31,10 +31,20 @@ def create_app(
     db_path: str | Path = DEFAULT_DB,
     sources: dict[str, SourceFactory] | None = None,
     matcher_factory: MatcherFactory = default_matcher,
+    api_key: str | None = None,
 ) -> FastAPI:
     app = FastAPI(title="jobscope", version=__version__)
     app.state.db_path = Path(db_path)
     app.state.sources = default_sources() if sources is None else sources
     app.state.matcher_factory = matcher_factory
+    app.state.api_key = api_key
     app.include_router(router)
     return app
+
+
+def create_app_from_env(env: Mapping[str, str]) -> FastAPI:
+    """Build the app from environment settings, failing closed in production."""
+    api_key = env.get("JOBSCOPE_API_KEY") or None
+    if env.get("JOBSCOPE_ENV") == "production" and api_key is None:
+        raise RuntimeError("JOBSCOPE_API_KEY must be set when JOBSCOPE_ENV=production")
+    return create_app(db_path=env.get("JOBSCOPE_DB", str(DEFAULT_DB)), api_key=api_key)

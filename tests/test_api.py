@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from jobscope.ai.extractor import SkillExtractor
 from jobscope.ai.llm import LLMError
 from jobscope.ai.matching import ResumeMatcher
-from jobscope.api.app import create_app
+from jobscope.api.app import create_app, create_app_from_env
 from jobscope.ingestion.remotive import IngestionError
 from jobscope.models import Job
 from tests.fakes import ScriptedClient
@@ -151,3 +151,48 @@ def test_match_returns_503_when_ai_is_unavailable(tmp_path: Path) -> None:
         response = test_client.post(f"/resumes/{resume_id}/match")
     assert response.status_code == 503
     assert "GROQ_API_KEY" in response.json()["detail"]
+
+
+@pytest.fixture
+def secured_client(tmp_path: Path) -> Iterator[TestClient]:
+    app = create_app(
+        db_path=tmp_path / "secured.db", sources={"fake": FakeSource}, api_key="secret"
+    )
+    with TestClient(app) as test_client:
+        yield test_client
+
+
+def test_protected_routes_reject_missing_or_wrong_key(secured_client: TestClient) -> None:
+    wrong = {"X-API-Key": "nope"}
+    params = {"source": "fake"}
+    assert secured_client.post("/ingest", params=params).status_code == 401
+    assert secured_client.post("/ingest", params=params, headers=wrong).status_code == 401
+    assert secured_client.post("/resumes", json={"text": "x"}).status_code == 401
+    assert secured_client.get("/resumes/1/matches").status_code == 401
+
+
+def test_correct_key_is_accepted(secured_client: TestClient) -> None:
+    headers = {"X-API-Key": "secret"}
+    params = {"source": "fake"}
+    assert secured_client.post("/ingest", params=params, headers=headers).status_code == 200
+    assert secured_client.post("/resumes", json={"text": "x"}, headers=headers).status_code == 201
+
+
+def test_read_only_routes_stay_public(secured_client: TestClient) -> None:
+    for path in ("/health", "/jobs", "/skills/trending"):
+        assert secured_client.get(path).status_code == 200
+
+
+def test_production_refuses_to_start_without_api_key(tmp_path: Path) -> None:
+    env = {"JOBSCOPE_ENV": "production", "JOBSCOPE_DB": str(tmp_path / "p.db")}
+    with pytest.raises(RuntimeError, match="JOBSCOPE_API_KEY"):
+        create_app_from_env(env)
+
+
+def test_production_with_api_key_starts(tmp_path: Path) -> None:
+    env = {
+        "JOBSCOPE_ENV": "production",
+        "JOBSCOPE_API_KEY": "k",
+        "JOBSCOPE_DB": str(tmp_path / "p.db"),
+    }
+    assert create_app_from_env(env).state.api_key == "k"

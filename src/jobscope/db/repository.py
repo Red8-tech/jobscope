@@ -61,6 +61,8 @@ class JobRepository:
     """All database access lives here; the rest of the app never writes SQL."""
 
     def __init__(self, path: str | Path = ":memory:") -> None:
+        if str(path) != ":memory:":
+            Path(path).parent.mkdir(parents=True, exist_ok=True)
         # Each request opens its own connection and uses it sequentially, so
         # sharing it across FastAPI's worker threads is safe.
         self._conn = sqlite3.connect(str(path), check_same_thread=False)

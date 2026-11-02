@@ -1,7 +1,8 @@
+import secrets
 from collections.abc import Iterator
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, Header, HTTPException, Query, Request
 
 from jobscope.ai.llm import LLMError
 from jobscope.api.schemas import (
@@ -34,12 +35,25 @@ PageSize = Annotated[int, Query(ge=1, le=100)]
 Offset = Annotated[int, Query(ge=0)]
 
 
+def require_api_key(request: Request, x_api_key: Annotated[str | None, Header()] = None) -> None:
+    """Reject requests without the shared secret. Disabled when no key is configured."""
+    expected = request.app.state.api_key
+    if expected is None:
+        return
+    supplied = (x_api_key or "").encode()
+    if not secrets.compare_digest(supplied, expected.encode()):
+        raise HTTPException(status_code=401, detail="invalid or missing API key")
+
+
+PROTECTED = [Depends(require_api_key)]
+
+
 @router.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
-@router.post("/ingest")
+@router.post("/ingest", dependencies=PROTECTED)
 def ingest(request: Request, repo: Repo, source: str = "csv") -> IngestResult:
     factory = request.app.state.sources.get(source)
     if factory is None:
@@ -79,12 +93,12 @@ def trending_skills(repo: Repo, limit: PageSize = 10) -> list[SkillTrend]:
     return [SkillTrend(name=s.name, jobs=s.jobs) for s in repo.top_skills(limit)]
 
 
-@router.post("/resumes", status_code=201)
+@router.post("/resumes", status_code=201, dependencies=PROTECTED)
 def create_resume(payload: ResumeCreate, repo: Repo) -> ResumeCreated:
     return ResumeCreated(id=repo.add_resume(payload.text))
 
 
-@router.post("/resumes/{resume_id}/match")
+@router.post("/resumes/{resume_id}/match", dependencies=PROTECTED)
 def match_resume(
     resume_id: int,
     request: Request,
@@ -103,7 +117,7 @@ def match_resume(
     return MatchList(resume_id=resume_id, matches=results)
 
 
-@router.get("/resumes/{resume_id}/matches")
+@router.get("/resumes/{resume_id}/matches", dependencies=PROTECTED)
 def get_matches(resume_id: int, repo: Repo) -> MatchList:
     if not repo.resume_exists(resume_id):
         raise HTTPException(status_code=404, detail="resume not found")
