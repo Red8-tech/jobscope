@@ -1,0 +1,1571 @@
+{
+ "1000": [
+  "git",
+  "python"
+ ],
+ "1001": [
+  "postgresql",
+  "python",
+  "react"
+ ],
+ "1002": [
+  "docker",
+  "langchain",
+  "redis",
+  "sql"
+ ],
+ "1003": [
+  "flask",
+  "kubernetes",
+  "sql"
+ ],
+ "1004": [
+  "aws",
+  "docker",
+  "flask"
+ ],
+ "1005": [
+  "django",
+  "fastapi",
+  "flask",
+  "langchain",
+  "react"
+ ],
+ "1007": [
+  "fastapi",
+  "kubernetes",
+  "pandas"
+ ],
+ "1008": [
+  "aws",
+  "git"
+ ],
+ "1009": [
+  "docker",
+  "pandas",
+  "pytest"
+ ],
+ "1010": [
+  "django",
+  "flask",
+  "react",
+  "sql"
+ ],
+ "1011": [
+  "aws",
+  "docker",
+  "git",
+  "pytest",
+  "python"
+ ],
+ "1012": [
+  "pytest",
+  "python",
+  "react"
+ ],
+ "1013": [
+  "aws",
+  "kubernetes",
+  "langchain"
+ ],
+ "1014": [
+  "python",
+  "react",
+  "sql"
+ ],
+ "1015": [
+  "django",
+  "git",
+  "pandas",
+  "pytest"
+ ],
+ "1016": [
+  "langchain",
+  "pandas",
+  "sql"
+ ],
+ "1017": [
+  "git",
+  "langchain",
+  "react",
+  "sql"
+ ],
+ "1018": [
+  "kubernetes",
+  "pandas"
+ ],
+ "1019": [
+  "fastapi",
+  "python",
+  "redis"
+ ],
+ "1020": [
+  "django",
+  "flask",
+  "git",
+  "kubernetes",
+  "pytest"
+ ],
+ "1021": [
+  "flask",
+  "kubernetes"
+ ],
+ "1022": [
+  "docker",
+  "git",
+  "kubernetes",
+  "pandas"
+ ],
+ "1023": [
+  "git",
+  "pytest",
+  "redis",
+  "sql"
+ ],
+ "1024": [
+  "django",
+  "docker",
+  "flask",
+  "postgresql"
+ ],
+ "1025": [
+  "django",
+  "fastapi",
+  "kubernetes",
+  "langchain"
+ ],
+ "1026": [
+  "docker",
+  "kubernetes"
+ ],
+ "1027": [
+  "docker",
+  "git",
+  "postgresql",
+  "react",
+  "redis"
+ ],
+ "1028": [
+  "langchain",
+  "pandas",
+  "react",
+  "sql"
+ ],
+ "1029": [
+  "aws",
+  "docker",
+  "flask",
+  "pandas",
+  "python"
+ ],
+ "1030": [
+  "docker",
+  "langchain"
+ ],
+ "1031": [
+  "docker",
+  "flask",
+  "kubernetes",
+  "redis"
+ ],
+ "1032": [
+  "aws",
+  "fastapi",
+  "pytest"
+ ],
+ "1033": [
+  "django",
+  "docker",
+  "git",
+  "postgresql",
+  "sql"
+ ],
+ "1034": [
+  "docker",
+  "redis"
+ ],
+ "1035": [
+  "django",
+  "flask",
+  "redis",
+  "sql"
+ ],
+ "1036": [
+  "django",
+  "react"
+ ],
+ "1037": [
+  "flask",
+  "postgresql",
+  "pytest"
+ ],
+ "1038": [
+  "git",
+  "react",
+  "redis",
+  "sql"
+ ],
+ "1039": [
+  "git",
+  "react"
+ ],
+ "1040": [
+  "aws",
+  "fastapi",
+  "flask",
+  "python"
+ ],
+ "1041": [
+  "docker",
+  "kubernetes",
+  "react"
+ ],
+ "1042": [
+  "fastapi",
+  "react",
+  "sql"
+ ],
+ "1043": [
+  "docker",
+  "react",
+  "sql"
+ ],
+ "1044": [
+  "aws",
+  "kubernetes",
+  "langchain",
+  "react"
+ ],
+ "1045": [
+  "aws",
+  "fastapi",
+  "flask",
+  "pytest",
+  "react"
+ ],
+ "1047": [
+  "django",
+  "postgresql",
+  "pytest",
+  "python",
+  "sql"
+ ],
+ "1048": [
+  "aws",
+  "django",
+  "docker",
+  "fastapi",
+  "react"
+ ],
+ "1049": [
+  "aws",
+  "langchain",
+  "react"
+ ],
+ "1050": [
+  "git",
+  "pandas"
+ ],
+ "1051": [
+  "aws",
+  "react"
+ ],
+ "1052": [
+  "aws",
+  "git",
+  "kubernetes",
+  "pytest"
+ ],
+ "1053": [
+  "pandas",
+  "python"
+ ],
+ "1054": [
+  "aws",
+  "fastapi",
+  "postgresql"
+ ],
+ "1055": [
+  "docker",
+  "flask",
+  "pytest"
+ ],
+ "1056": [
+  "django",
+  "flask",
+  "kubernetes",
+  "postgresql",
+  "redis"
+ ],
+ "1057": [
+  "flask",
+  "langchain"
+ ],
+ "1058": [
+  "aws",
+  "kubernetes",
+  "redis",
+  "sql"
+ ],
+ "1059": [
+  "langchain",
+  "pandas",
+  "pytest",
+  "redis",
+  "sql"
+ ],
+ "1060": [
+  "aws",
+  "django",
+  "redis",
+  "sql"
+ ],
+ "1061": [
+  "git",
+  "pandas"
+ ],
+ "1062": [
+  "django",
+  "git",
+  "pytest",
+  "redis",
+  "sql"
+ ],
+ "1064": [
+  "git",
+  "sql"
+ ],
+ "1065": [
+  "aws",
+  "redis"
+ ],
+ "1066": [
+  "aws",
+  "flask",
+  "postgresql",
+  "react",
+  "redis"
+ ],
+ "1067": [
+  "docker",
+  "flask",
+  "pandas",
+  "pytest"
+ ],
+ "1068": [
+  "docker",
+  "kubernetes",
+  "pytest",
+  "redis"
+ ],
+ "1069": [
+  "git",
+  "python",
+  "react",
+  "redis"
+ ],
+ "1070": [
+  "git",
+  "react"
+ ],
+ "1071": [
+  "aws",
+  "flask"
+ ],
+ "1072": [
+  "django",
+  "docker",
+  "postgresql",
+  "python"
+ ],
+ "1073": [
+  "docker",
+  "git",
+  "python",
+  "sql"
+ ],
+ "1074": [
+  "django",
+  "docker",
+  "langchain",
+  "sql"
+ ],
+ "1075": [
+  "fastapi",
+  "git",
+  "pytest",
+  "redis"
+ ],
+ "1076": [
+  "aws",
+  "langchain",
+  "sql"
+ ],
+ "1077": [
+  "aws",
+  "postgresql",
+  "python"
+ ],
+ "1078": [
+  "fastapi",
+  "langchain",
+  "pandas",
+  "postgresql",
+  "react"
+ ],
+ "1079": [
+  "flask",
+  "pytest",
+  "redis"
+ ],
+ "1080": [
+  "django",
+  "kubernetes",
+  "pandas"
+ ],
+ "1081": [
+  "fastapi",
+  "git",
+  "redis"
+ ],
+ "1084": [
+  "django",
+  "docker",
+  "pandas",
+  "sql"
+ ],
+ "1085": [
+  "flask",
+  "python"
+ ],
+ "1086": [
+  "redis",
+  "sql"
+ ],
+ "1087": [
+  "langchain",
+  "pytest",
+  "sql"
+ ],
+ "1088": [
+  "django",
+  "kubernetes",
+  "pandas",
+  "sql"
+ ],
+ "1089": [
+  "django",
+  "flask",
+  "kubernetes",
+  "langchain",
+  "python"
+ ],
+ "1090": [
+  "aws",
+  "docker",
+  "git",
+  "langchain",
+  "redis"
+ ],
+ "1092": [
+  "git",
+  "kubernetes",
+  "pytest",
+  "react"
+ ],
+ "1093": [
+  "aws",
+  "kubernetes",
+  "postgresql",
+  "sql"
+ ],
+ "1094": [
+  "flask",
+  "git",
+  "postgresql"
+ ],
+ "1095": [
+  "fastapi",
+  "kubernetes",
+  "redis"
+ ],
+ "1096": [
+  "docker",
+  "kubernetes",
+  "postgresql",
+  "react",
+  "redis"
+ ],
+ "1097": [
+  "fastapi",
+  "git",
+  "langchain",
+  "pandas"
+ ],
+ "1098": [
+  "fastapi",
+  "postgresql",
+  "pytest"
+ ],
+ "1099": [
+  "aws",
+  "django",
+  "kubernetes",
+  "pytest"
+ ],
+ "1100": [
+  "langchain",
+  "pandas",
+  "react",
+  "sql"
+ ],
+ "1101": [
+  "aws",
+  "fastapi",
+  "kubernetes"
+ ],
+ "1102": [
+  "docker",
+  "flask",
+  "python",
+  "react",
+  "sql"
+ ],
+ "1103": [
+  "docker",
+  "pandas",
+  "sql"
+ ],
+ "1104": [
+  "fastapi",
+  "postgresql",
+  "react"
+ ],
+ "1105": [
+  "docker",
+  "postgresql",
+  "pytest",
+  "sql"
+ ],
+ "1106": [
+  "django",
+  "pytest",
+  "redis"
+ ],
+ "1107": [
+  "aws",
+  "docker",
+  "pytest",
+  "react"
+ ],
+ "1108": [
+  "django",
+  "flask",
+  "kubernetes",
+  "redis"
+ ],
+ "1109": [
+  "aws",
+  "pandas"
+ ],
+ "1110": [
+  "docker",
+  "python",
+  "sql"
+ ],
+ "1111": [
+  "flask",
+  "pytest",
+  "python",
+  "sql"
+ ],
+ "1112": [
+  "flask",
+  "python"
+ ],
+ "1113": [
+  "aws",
+  "fastapi",
+  "git",
+  "pytest"
+ ],
+ "1114": [
+  "aws",
+  "fastapi",
+  "pandas"
+ ],
+ "1115": [
+  "docker",
+  "fastapi",
+  "flask",
+  "pytest",
+  "react"
+ ],
+ "1116": [
+  "git",
+  "pandas",
+  "postgresql",
+  "react",
+  "sql"
+ ],
+ "1117": [
+  "aws",
+  "fastapi"
+ ],
+ "1118": [
+  "docker",
+  "pandas"
+ ],
+ "1119": [
+  "docker",
+  "langchain",
+  "pytest",
+  "redis",
+  "sql"
+ ],
+ "1120": [
+  "django",
+  "fastapi",
+  "flask",
+  "pandas",
+  "sql"
+ ],
+ "1121": [
+  "fastapi",
+  "react"
+ ],
+ "1122": [
+  "flask",
+  "langchain",
+  "postgresql",
+  "python",
+  "react"
+ ],
+ "1123": [
+  "django",
+  "flask",
+  "redis"
+ ],
+ "1124": [
+  "django",
+  "git",
+  "react",
+  "sql"
+ ],
+ "1125": [
+  "django",
+  "git",
+  "langchain"
+ ],
+ "1126": [
+  "aws",
+  "flask",
+  "pandas",
+  "react"
+ ],
+ "1127": [
+  "django",
+  "fastapi",
+  "pandas",
+  "redis"
+ ],
+ "1129": [
+  "kubernetes",
+  "postgresql",
+  "pytest",
+  "python"
+ ],
+ "1130": [
+  "django",
+  "langchain",
+  "postgresql"
+ ],
+ "1131": [
+  "aws",
+  "kubernetes",
+  "react"
+ ],
+ "1132": [
+  "langchain",
+  "postgresql",
+  "pytest",
+  "react"
+ ],
+ "1133": [
+  "docker",
+  "fastapi",
+  "git",
+  "kubernetes"
+ ],
+ "1134": [
+  "django",
+  "docker",
+  "git",
+  "pandas",
+  "react"
+ ],
+ "1135": [
+  "aws",
+  "flask"
+ ],
+ "1136": [
+  "docker",
+  "flask",
+  "python",
+  "redis"
+ ],
+ "1137": [
+  "docker",
+  "fastapi",
+  "sql"
+ ],
+ "1138": [
+  "docker",
+  "pandas"
+ ],
+ "1139": [
+  "flask",
+  "git",
+  "kubernetes",
+  "pandas",
+  "pytest"
+ ],
+ "1140": [
+  "docker",
+  "flask",
+  "git",
+  "kubernetes",
+  "sql"
+ ],
+ "1141": [
+  "kubernetes",
+  "sql"
+ ],
+ "1142": [
+  "git",
+  "langchain",
+  "react"
+ ],
+ "1143": [
+  "git",
+  "redis"
+ ],
+ "1144": [
+  "git",
+  "kubernetes"
+ ],
+ "1145": [
+  "django",
+  "docker",
+  "fastapi",
+  "kubernetes",
+  "pytest"
+ ],
+ "1146": [
+  "aws",
+  "django",
+  "pandas",
+  "sql"
+ ],
+ "1147": [
+  "django",
+  "pandas",
+  "sql"
+ ],
+ "1148": [
+  "aws",
+  "fastapi",
+  "flask"
+ ],
+ "1149": [
+  "aws",
+  "fastapi",
+  "postgresql",
+  "python",
+  "sql"
+ ],
+ "1150": [
+  "git",
+  "kubernetes"
+ ],
+ "1151": [
+  "django",
+  "git",
+  "kubernetes",
+  "redis",
+  "sql"
+ ],
+ "1152": [
+  "flask",
+  "postgresql",
+  "pytest",
+  "react"
+ ],
+ "1153": [
+  "fastapi",
+  "flask",
+  "kubernetes",
+  "postgresql",
+  "pytest"
+ ],
+ "1154": [
+  "langchain",
+  "pytest",
+  "sql"
+ ],
+ "1155": [
+  "redis",
+  "sql"
+ ],
+ "1156": [
+  "pandas",
+  "pytest"
+ ],
+ "1159": [
+  "docker",
+  "langchain",
+  "postgresql"
+ ],
+ "1160": [
+  "postgresql",
+  "react",
+  "redis"
+ ],
+ "1161": [
+  "aws",
+  "postgresql",
+  "pytest"
+ ],
+ "1162": [
+  "postgresql",
+  "sql"
+ ],
+ "1163": [
+  "flask",
+  "langchain",
+  "sql"
+ ],
+ "1164": [
+  "aws",
+  "kubernetes",
+  "postgresql",
+  "python",
+  "sql"
+ ],
+ "1166": [
+  "fastapi",
+  "flask",
+  "kubernetes",
+  "sql"
+ ],
+ "1167": [
+  "git",
+  "langchain",
+  "sql"
+ ],
+ "1168": [
+  "django",
+  "pandas"
+ ],
+ "1169": [
+  "django",
+  "react"
+ ],
+ "1170": [
+  "flask",
+  "git",
+  "python",
+  "sql"
+ ],
+ "1171": [
+  "django",
+  "fastapi",
+  "flask",
+  "git",
+  "pytest"
+ ],
+ "1172": [
+  "aws",
+  "django",
+  "pandas",
+  "react",
+  "sql"
+ ],
+ "1173": [
+  "flask",
+  "pytest"
+ ],
+ "1174": [
+  "django",
+  "docker",
+  "fastapi"
+ ],
+ "1175": [
+  "fastapi",
+  "postgresql"
+ ],
+ "1176": [
+  "aws",
+  "flask",
+  "pytest"
+ ],
+ "1178": [
+  "django",
+  "flask",
+  "pytest"
+ ],
+ "1179": [
+  "django",
+  "kubernetes",
+  "postgresql"
+ ],
+ "1180": [
+  "kubernetes",
+  "langchain",
+  "pandas"
+ ],
+ "1181": [
+  "fastapi",
+  "git",
+  "pandas",
+  "redis"
+ ],
+ "1182": [
+  "fastapi",
+  "git",
+  "python"
+ ],
+ "1183": [
+  "fastapi",
+  "pandas",
+  "pytest",
+  "sql"
+ ],
+ "1184": [
+  "docker",
+  "langchain",
+  "pandas",
+  "react",
+  "redis"
+ ],
+ "1185": [
+  "git",
+  "react",
+  "sql"
+ ],
+ "1187": [
+  "flask",
+  "pytest",
+  "sql"
+ ],
+ "1188": [
+  "aws",
+  "flask"
+ ],
+ "1189": [
+  "docker",
+  "redis"
+ ],
+ "1190": [
+  "django",
+  "fastapi",
+  "kubernetes"
+ ],
+ "1191": [
+  "docker",
+  "react"
+ ],
+ "1192": [
+  "kubernetes",
+  "postgresql"
+ ],
+ "1193": [
+  "langchain",
+  "postgresql",
+  "pytest"
+ ],
+ "1194": [
+  "django",
+  "redis"
+ ],
+ "1195": [
+  "kubernetes",
+  "pandas",
+  "python",
+  "react",
+  "redis"
+ ],
+ "1196": [
+  "aws",
+  "flask",
+  "pandas"
+ ],
+ "1197": [
+  "flask",
+  "python"
+ ],
+ "1198": [
+  "aws",
+  "fastapi"
+ ],
+ "1199": [
+  "docker",
+  "flask",
+  "postgresql",
+  "pytest",
+  "react"
+ ],
+ "1200": [
+  "flask",
+  "git",
+  "langchain",
+  "pytest"
+ ],
+ "1201": [
+  "docker",
+  "langchain",
+  "postgresql"
+ ],
+ "1202": [
+  "fastapi",
+  "git",
+  "kubernetes"
+ ],
+ "1203": [
+  "django",
+  "langchain",
+  "pytest",
+  "react",
+  "sql"
+ ],
+ "1204": [
+  "fastapi",
+  "langchain",
+  "pandas",
+  "pytest"
+ ],
+ "1205": [
+  "django",
+  "langchain",
+  "pandas",
+  "python",
+  "react"
+ ],
+ "1206": [
+  "aws",
+  "flask",
+  "git",
+  "react"
+ ],
+ "1207": [
+  "git",
+  "postgresql",
+  "python"
+ ],
+ "1208": [
+  "git",
+  "sql"
+ ],
+ "1209": [
+  "docker",
+  "redis",
+  "sql"
+ ],
+ "1210": [
+  "aws",
+  "git",
+  "pandas"
+ ],
+ "1211": [
+  "aws",
+  "flask",
+  "langchain",
+  "python",
+  "sql"
+ ],
+ "1212": [
+  "git",
+  "langchain",
+  "pandas",
+  "sql"
+ ],
+ "1213": [
+  "docker",
+  "postgresql",
+  "sql"
+ ],
+ "1214": [
+  "flask",
+  "sql"
+ ],
+ "1215": [
+  "docker",
+  "kubernetes",
+  "pandas",
+  "pytest",
+  "redis"
+ ],
+ "1216": [
+  "django",
+  "react"
+ ],
+ "1217": [
+  "docker",
+  "sql"
+ ],
+ "1218": [
+  "django",
+  "redis"
+ ],
+ "1219": [
+  "git",
+  "langchain",
+  "pandas",
+  "react"
+ ],
+ "1220": [
+  "docker",
+  "kubernetes",
+  "python",
+  "sql"
+ ],
+ "1221": [
+  "docker",
+  "pytest",
+  "sql"
+ ],
+ "1222": [
+  "flask",
+  "git",
+  "postgresql",
+  "react",
+  "redis"
+ ],
+ "1223": [
+  "docker",
+  "flask",
+  "git",
+  "pytest",
+  "react"
+ ],
+ "1224": [
+  "aws",
+  "postgresql",
+  "redis",
+  "sql"
+ ],
+ "1225": [
+  "flask",
+  "git"
+ ],
+ "1226": [
+  "fastapi",
+  "langchain"
+ ],
+ "1227": [
+  "fastapi",
+  "pandas"
+ ],
+ "1228": [
+  "docker",
+  "react",
+  "redis"
+ ],
+ "1229": [
+  "langchain",
+  "postgresql",
+  "pytest"
+ ],
+ "1231": [
+  "git",
+  "pytest"
+ ],
+ "1233": [
+  "flask",
+  "kubernetes"
+ ],
+ "1234": [
+  "react",
+  "redis"
+ ],
+ "1235": [
+  "django",
+  "fastapi",
+  "postgresql"
+ ],
+ "1236": [
+  "django",
+  "git"
+ ],
+ "1237": [
+  "langchain",
+  "pandas",
+  "postgresql"
+ ],
+ "1238": [
+  "aws",
+  "flask",
+  "kubernetes",
+  "pandas",
+  "react"
+ ],
+ "1239": [
+  "django",
+  "kubernetes",
+  "postgresql",
+  "python",
+  "react"
+ ],
+ "1240": [
+  "kubernetes",
+  "postgresql",
+  "redis"
+ ],
+ "1241": [
+  "flask",
+  "pandas",
+  "sql"
+ ],
+ "1242": [
+  "fastapi",
+  "langchain",
+  "postgresql",
+  "react"
+ ],
+ "1243": [
+  "aws",
+  "django",
+  "fastapi"
+ ],
+ "1244": [
+  "aws",
+  "django",
+  "postgresql",
+  "pytest",
+  "redis"
+ ],
+ "1246": [
+  "git",
+  "pandas",
+  "pytest"
+ ],
+ "1247": [
+  "aws",
+  "sql"
+ ],
+ "1248": [
+  "git",
+  "kubernetes",
+  "pandas",
+  "postgresql",
+  "redis"
+ ],
+ "1249": [
+  "git",
+  "kubernetes",
+  "pandas"
+ ],
+ "1250": [
+  "aws",
+  "fastapi",
+  "kubernetes",
+  "pandas",
+  "react"
+ ],
+ "1251": [
+  "docker",
+  "pytest",
+  "python"
+ ],
+ "1252": [
+  "kubernetes",
+  "redis"
+ ],
+ "1253": [
+  "django",
+  "fastapi",
+  "pytest",
+  "python"
+ ],
+ "1254": [
+  "aws",
+  "django",
+  "postgresql"
+ ],
+ "1255": [
+  "aws",
+  "django",
+  "kubernetes",
+  "langchain",
+  "pandas"
+ ],
+ "1256": [
+  "docker",
+  "flask",
+  "sql"
+ ],
+ "1257": [
+  "django",
+  "langchain",
+  "redis"
+ ],
+ "1258": [
+  "aws",
+  "fastapi",
+  "flask",
+  "langchain",
+  "postgresql"
+ ],
+ "1259": [
+  "django",
+  "pytest"
+ ],
+ "1260": [
+  "aws",
+  "django",
+  "docker",
+  "fastapi"
+ ],
+ "1261": [
+  "fastapi",
+  "git",
+  "kubernetes"
+ ],
+ "1262": [
+  "django",
+  "fastapi",
+  "git",
+  "python",
+  "sql"
+ ],
+ "1263": [
+  "flask",
+  "kubernetes",
+  "pandas"
+ ],
+ "1264": [
+  "fastapi",
+  "sql"
+ ],
+ "1265": [
+  "django",
+  "fastapi",
+  "langchain"
+ ],
+ "1266": [
+  "django",
+  "flask",
+  "git",
+  "langchain"
+ ],
+ "1267": [
+  "docker",
+  "git",
+  "langchain",
+  "postgresql",
+  "pytest"
+ ],
+ "1268": [
+  "docker",
+  "flask",
+  "kubernetes",
+  "langchain",
+  "python"
+ ],
+ "1269": [
+  "flask",
+  "git",
+  "pytest",
+  "react"
+ ],
+ "1270": [
+  "flask",
+  "redis",
+  "sql"
+ ],
+ "1271": [
+  "fastapi",
+  "kubernetes",
+  "redis",
+  "sql"
+ ],
+ "1272": [
+  "django",
+  "git",
+  "python"
+ ],
+ "1273": [
+  "pandas",
+  "pytest",
+  "python"
+ ],
+ "1274": [
+  "kubernetes",
+  "pandas",
+  "sql"
+ ],
+ "1275": [
+  "aws",
+  "django",
+  "pandas"
+ ],
+ "1276": [
+  "fastapi",
+  "postgresql",
+  "react"
+ ],
+ "1277": [
+  "aws",
+  "kubernetes",
+  "pytest",
+  "python"
+ ],
+ "1280": [
+  "django",
+  "langchain",
+  "react",
+  "sql"
+ ],
+ "1281": [
+  "fastapi",
+  "kubernetes"
+ ],
+ "1282": [
+  "django",
+  "git",
+  "pandas",
+  "postgresql",
+  "redis"
+ ],
+ "1283": [
+  "django",
+  "flask"
+ ],
+ "1284": [
+  "kubernetes",
+  "pandas",
+  "postgresql"
+ ],
+ "1285": [
+  "kubernetes",
+  "python"
+ ],
+ "1286": [
+  "fastapi",
+  "pandas",
+  "postgresql",
+  "react"
+ ],
+ "1287": [
+  "aws",
+  "postgresql"
+ ],
+ "1288": [
+  "django",
+  "flask",
+  "sql"
+ ],
+ "1289": [
+  "aws",
+  "django",
+  "fastapi",
+  "postgresql",
+  "python"
+ ],
+ "1290": [
+  "django",
+  "pandas"
+ ],
+ "1291": [
+  "django",
+  "fastapi",
+  "flask",
+  "python"
+ ],
+ "1292": [
+  "docker",
+  "git",
+  "react"
+ ],
+ "1293": [
+  "pandas",
+  "pytest",
+  "python"
+ ],
+ "1294": [
+  "docker",
+  "fastapi",
+  "git",
+  "pytest",
+  "sql"
+ ],
+ "1295": [
+  "fastapi",
+  "kubernetes",
+  "langchain",
+  "postgresql",
+  "pytest"
+ ],
+ "1296": [
+  "django",
+  "kubernetes",
+  "sql"
+ ],
+ "1297": [
+  "postgresql",
+  "react",
+  "redis"
+ ],
+ "1298": [
+  "aws",
+  "fastapi",
+  "sql"
+ ],
+ "1299": [
+  "aws",
+  "langchain"
+ ],
+ "5000": [
+  "django",
+  "python"
+ ],
+ "5004": [
+  "kubernetes",
+  "python"
+ ],
+ "5005": [
+  "pandas",
+  "react",
+  "sql"
+ ],
+ "5007": [
+  "aws",
+  "flask",
+  "git",
+  "postgresql"
+ ],
+ "5008": [
+  "aws",
+  "docker",
+  "kubernetes",
+  "pandas",
+  "pytest"
+ ],
+ "5010": [
+  "docker",
+  "kubernetes",
+  "pandas",
+  "sql"
+ ],
+ "5011": [
+  "langchain",
+  "pytest",
+  "react"
+ ],
+ "5012": [
+  "git",
+  "langchain",
+  "react",
+  "sql"
+ ]
+}

@@ -9,6 +9,6 @@ RUN pip install --no-cache-dir .
 
 COPY data/sample ./data/sample
 
-ENV JOBSCOPE_ENV=production JOBSCOPE_DB=/data/jobscope.db
+ENV JOBSCOPE_ENV=production JOBSCOPE_DB=/data/jobscope.db JOBSCOPE_SEED=1
 EXPOSE 8000
 CMD ["sh", "-c", "uvicorn jobscope.api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

@@ -236,3 +236,19 @@ def test_backfill_returns_503_when_ai_is_unavailable(tmp_path: Path) -> None:
     app = create_app(db_path=tmp_path / "b.db", extractor_factory=broken)
     with TestClient(app) as test_client:
         assert test_client.post("/backfill").status_code == 503
+
+
+def test_app_seeds_an_empty_database_on_startup(tmp_path: Path) -> None:
+    app = create_app(
+        db_path=tmp_path / "seed.db",
+        sources={"csv": FakeSource},
+        seed_on_startup=True,
+        skills_snapshot=None,
+    )
+    with TestClient(app) as test_client:
+        assert test_client.get("/jobs").json()["total"] == 3
+
+
+def test_seed_flag_comes_from_environment(tmp_path: Path) -> None:
+    env = {"JOBSCOPE_DB": str(tmp_path / "e.db"), "JOBSCOPE_SEED": "1"}
+    assert create_app_from_env(env).state.seed_on_startup is True
